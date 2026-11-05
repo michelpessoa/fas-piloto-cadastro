@@ -1,0 +1,9 @@
+repositorio: michelpessoa/fas-piloto-cadastro
+arquivos_permitidos:
+  - "src/**"
+  - "tests/**"
+comandos:
+  build: "python -m compileall -q src tests"
+  lint: "ruff check ."
+  testes: "python -m pytest -q"
+  e2e: null

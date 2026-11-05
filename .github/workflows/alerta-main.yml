@@ -1,0 +1,25 @@
+name: Alerta de main
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  conferir:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Falha se o push não veio de release/* ou hotfix/*
+        env:
+          MENSAGEM: ${{ github.event.head_commit.message }}
+        run: |
+          if ! printf '%s' "$MENSAGEM" | head -1 | grep -Eq 'from [^ ]+/(release|hotfix)/'; then
+            echo "::error::push em main fora de release/*"
+            exit 1
+          fi
